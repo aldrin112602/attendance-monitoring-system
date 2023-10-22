@@ -34,6 +34,14 @@ Route::middleware([
         Route::get('/admin', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
+
+         Route::get('/admin/faculty', function () {
+            return view('admin.faculty');
+        })->name('admin.faculty');
+
+        Route::get('/admin/administrator', function () {
+            return view('admin.administrator');
+        })->name('admin.administrator');
     });
 });
 

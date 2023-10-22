@@ -18,6 +18,14 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
+                        <x-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty')">
+                            {{ __('Faculty') }}
+                        </x-nav-link>
+
+                        <x-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator')">
+                            {{ __('Administrator') }}
+                        </x-nav-link>
+
                      {{-- End Admin navigation link --}}
                     @else
                      {{-- User navigation link --}}
