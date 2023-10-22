@@ -15,6 +15,9 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    {{-- <x-nav-link href="{{ route('faculty') }}" :active="request()->routeIs('faculty')">
+                        {{ __('Faculty') }}
+                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -161,7 +164,7 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                        <img class="h-10 w-10 rounded-full object-cover" src="{{ str_replace('http://localhost/storage/', '/storage/', Auth::user()->profile_photo_url) }}"
                             alt="{{ Auth::user()->name }}" />
                     </div>
                 @endif
