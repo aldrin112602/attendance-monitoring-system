@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                     {{-- Admin navigation link --}}
+                    {{-- Admin navigation link --}}
                     @if (Auth::user()->role == 1)
                         <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                             {{ __('Dashboard') }}
@@ -26,16 +26,20 @@
                             {{ __('Administrator') }}
                         </x-nav-link>
 
-                     {{-- End Admin navigation link --}}
+                        <x-nav-link href="{{ route('admin.message') }}" :active="request()->routeIs('admin.message')">
+                            {{ __('Message') }}
+                        </x-nav-link>
+
+                        {{-- End Admin navigation link --}}
                     @else
-                     {{-- User navigation link --}}
+                        {{-- User navigation link --}}
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                     {{-- End User navigation link --}}
+                        {{-- End User navigation link --}}
                     @endif
 
-                </div> 
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -171,9 +175,32 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            {{-- Admin navigation link --}}
+            @if (Auth::user()->role == 1)
+                <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty')">
+                    {{ __('Faculty') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator')">
+                    {{ __('Administrator') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('admin.message') }}" :active="request()->routeIs('admin.message')">
+                    {{ __('Message') }}
+                </x-responsive-nav-link>
+
+                {{-- End Admin navigation link --}}
+            @else
+                {{-- User navigation link --}}
+                <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                {{-- End User navigation link --}}
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -181,7 +208,8 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ str_replace('http://localhost/storage/', '/storage/', Auth::user()->profile_photo_url) }}"
+                        <img class="h-10 w-10 rounded-full object-cover"
+                            src="{{ str_replace('http://localhost/storage/', '/storage/', Auth::user()->profile_photo_url) }}"
                             alt="{{ Auth::user()->name }}" />
                     </div>
                 @endif

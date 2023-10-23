@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,9 +39,15 @@ Route::middleware([
             return view('admin.faculty');
         })->name('admin.faculty');
 
-        Route::get('/admin/administrator', function () {
-            return view('admin.administrator');
-        })->name('admin.administrator');
+        // Route::get('/admin/administrator', function () {
+        //     return view('admin.administrator');
+        // })->name('admin.administrator');
+
+        Route::get('/admin/administrator', [UserController::class, 'index'])->name('admin.administrator');
+
+        Route::get('/admin/message', function () {
+            return view('admin.message');
+        })->name('admin.message');
     });
 });
 
