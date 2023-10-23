@@ -35,13 +35,8 @@ Route::middleware([
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
-         Route::get('/admin/faculty', function () {
-            return view('admin.faculty');
-        })->name('admin.faculty');
-
-        // Route::get('/admin/administrator', function () {
-        //     return view('admin.administrator');
-        // })->name('admin.administrator');
+        
+        Route::get('/admin/faculty', [UserController::class, 'getFaculty'])->name('admin.faculty');
 
         Route::get('/admin/administrator', [UserController::class, 'index'])->name('admin.administrator');
 
