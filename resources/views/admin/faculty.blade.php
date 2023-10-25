@@ -3,8 +3,8 @@
         <h2
             class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center justify-between">
             {{ __('Faculty') }}
-            <button class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Faculty</button>
+            <a href="{{ route('admin.faculty.create') }}" class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
+                    class="fa fa-plus" aria-hidden="true"></i> Faculty</a>
         </h2>
     </x-slot>
 

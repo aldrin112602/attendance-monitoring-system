@@ -99,7 +99,12 @@ class UserController extends Controller {
         return view( 'admin.admin.create' );
     }
 
-    public function addAdminPost( Request $request ) {
+    public function addFaculty() {
+        return view( 'admin.faculty.create' );
+    }
+
+
+    public function addFacultyPost( Request $request ) {
         // Validate the form data
         $request->validate( [
             'name' => 'required|string|max:255',
@@ -127,7 +132,7 @@ class UserController extends Controller {
             ->update(['profile_photo_path' => $profile_photo_path]);
     }
 
-    return redirect()->route('admin.administrator')->with('success', 'Admin added successfully' );
+    return redirect()->route('admin.faculty')->with('success', 'Faculty added successfully' );
 
         }
 

@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2
+            class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center justify-between">
             {{ __('Edit Admin') }}
+            <a href="{{ route('admin.administrator') }}" class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
+                    class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
         </h2>
     </x-slot>
 

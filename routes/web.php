@@ -50,6 +50,13 @@ Route::middleware([
 
         Route::post('/admin/admin/create', [UserController::class, 'addAdminPost'])->name('admin.admin.create.post');
 
+
+        Route::get('/admin/faculty/create', [UserController::class, 'addFaculty'])->name('admin.faculty.create');
+
+        Route::post('/admin/faculty/create', [UserController::class, 'addFacultyPost'])->name('admin.faculty.create.post');
+
+
+
         Route::get('/admin/administrator', [UserController::class, 'index'])->name('admin.administrator');
 
         Route::get('/admin/message', function () {
