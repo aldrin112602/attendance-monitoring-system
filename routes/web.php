@@ -47,8 +47,9 @@ Route::middleware([
 
 
         Route::get('/admin/admin/create', [UserController::class, 'addAdmin'])->name('admin.admin.create');
-
         Route::post('/admin/admin/create', [UserController::class, 'addAdminPost'])->name('admin.admin.create.post');
+        Route::post('/admin/delete/{id}', [UserController::class, 'delete'])->name('admin.delete');
+
 
 
         Route::get('/admin/faculty/create', [UserController::class, 'addFaculty'])->name('admin.faculty.create');

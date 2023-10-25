@@ -59,8 +59,15 @@
                                         <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
                                             class="px-3 rounded-xl py-2 {{ Auth::user()->id != $admin->id ? 'bg-indigo-200 hover:text-indigo-900 text-indigo-600' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Edit</a>
 
-                                        <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
-                                            class="text-rose-600  px-3 rounded-xl py-2 bg-rose-200 {{ Auth::user()->id != $admin->id ? 'hover:text-rose-900' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Delete</a>
+                                        {{-- <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
+                                            class="text-rose-600  px-3 rounded-xl py-2 bg-rose-200 {{ Auth::user()->id != $admin->id ? 'hover:text-rose-900' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Delete</a> --}}
+                                        <form action="{{ route('admin.delete', ['id' => $admin->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="text-rose-600 px-3 rounded-xl py-2 bg-rose-200 hover:text-rose-900">Delete</button>
+                                        </form>
+
                                         <!-- Add edit link or button here -->
                                     </td>
                                 </tr>

@@ -23,11 +23,13 @@ class UserController extends Controller {
 
     public function editFaculty( $id ) {
         $faculty = User::where( 'id', $id )->first();
+        if(!User::find($id)) return redirect()->route( 'admin.faculty' );
         return view( 'admin.faculty.edit', compact( 'faculty' ) );
     }
 
     public function editAdmin( $id ) {
         $admin = User::where( 'id', $id )->first();
+        if(!User::find($id)) return redirect()->route( 'admin.administrator' );
         return view( 'admin.admin.edit', compact( 'admin' ) );
     }
 
@@ -65,7 +67,7 @@ class UserController extends Controller {
         // Validate the form data
         $request->validate( [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users, email, ' . $id,
             'newPassword' => 'nullable|min:6',
             'profile' => 'nullable|image|mimes:jpeg, png, jpg, gif|max:2048',
         ] );
@@ -91,10 +93,6 @@ class UserController extends Controller {
         return redirect()->route( 'admin.administrator' )->with( 'success', 'Admin updated successfully' );
     }
 
-
-
-    
-
     public function addAdmin() {
         return view( 'admin.admin.create' );
     }
@@ -102,7 +100,6 @@ class UserController extends Controller {
     public function addFaculty() {
         return view( 'admin.faculty.create' );
     }
-
 
     public function addFacultyPost( Request $request ) {
         // Validate the form data
@@ -134,6 +131,15 @@ class UserController extends Controller {
 
     return redirect()->route('admin.faculty')->with('success', 'Faculty added successfully' );
 
+        }
+
+        public function delete($id) {
+            $id = intval( $id );
+            $user = User::find( $id );
+            if ( $user ) {
+                $user->delete();
+                return redirect()->route('admin.administrator')->with('success','Admin deleted successfully');
+            }
         }
 
     }
