@@ -53,7 +53,7 @@ class UserController extends Controller {
 
     $user->save();
 
-    return redirect()->route('admin.faculty')->with('success', 'Profile updated successfully' );
+    return redirect()->route('admin.faculty')->with('success', 'Faculty updated successfully' );
     }
 
 }
