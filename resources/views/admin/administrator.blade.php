@@ -56,19 +56,22 @@
                                         {{ ucwords($admin->status) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                        <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
-                                            class="px-3 rounded-xl py-2 {{ Auth::user()->id != $admin->id ? 'bg-indigo-200 hover:text-indigo-900 text-indigo-600' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Edit</a>
-
-                                        {{-- <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
-                                            class="text-rose-600  px-3 rounded-xl py-2 bg-rose-200 {{ Auth::user()->id != $admin->id ? 'hover:text-rose-900' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Delete</a> --}}
-                                        <form action="{{ route('admin.delete', ['id' => $admin->id]) }}"
-                                            method="POST">
+                                        <form class="flex items-center justify-center gap-3"
+                                            action="{{ route('admin.delete', ['id' => $admin->id]) }}" method="POST">
                                             @csrf
-                                            <button type="submit"
-                                                class="text-rose-600 px-3 rounded-xl py-2 bg-rose-200 hover:text-rose-900">Delete</button>
-                                        </form>
 
-                                        <!-- Add edit link or button here -->
+                                            <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
+                                                class="px-3 rounded-xl py-2 {{ Auth::user()->id != $admin->id ? 'bg-indigo-200 hover:text-indigo-900 text-indigo-600' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Edit</a>
+
+                                            <button {{ Auth::user()->id == $admin->id ? 'disabled' : '' }}
+                                                type="button"
+                                                class="px-3 rounded-xl py-2 {{ Auth::user()->id == $admin->id ? 'cursor-not-allowed bg-slate-700 text-slate-400' : 'bg-rose-200 hover:text-rose-900 text-rose-600' }}"
+                                                onclick="deleteAdmin({{ $admin->id }})">Delete</button>
+                                        </form>
+                                        <form id="delete-form" style="display: none;"
+                                            action="{{ route('admin.delete', ['id' => $admin->id]) }}" method="POST">
+                                            @csrf
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,4 +83,22 @@
             </div>
         </div>
     </div>
+    <script>
+        function deleteAdmin(adminId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form').submit();
+                }
+            });
+        }
+    </script>
+
 </x-app-layout>

@@ -22,14 +22,19 @@ class UserController extends Controller {
     }
 
     public function editFaculty( $id ) {
-        $faculty = User::where( 'id', $id )->first();
-        if(!User::find($id)) return redirect()->route( 'admin.faculty' );
+        $faculty = User::find( $id );
+        if ( !$faculty || $faculty->role != 2 ) {
+            return redirect()->route( 'admin.faculty' )->with( 'error', 'Sorry, that faculty did not exist' );
+        }
         return view( 'admin.faculty.edit', compact( 'faculty' ) );
     }
 
     public function editAdmin( $id ) {
-        $admin = User::where( 'id', $id )->first();
-        if(!User::find($id)) return redirect()->route( 'admin.administrator' );
+        $admin = User::find( $id );
+        if ( !$admin || $admin->role != 1 ) {
+            return redirect()->route( 'admin.administrator' )->with( 'error', 'Sorry, that admin did not exist' );
+            ;
+        }
         return view( 'admin.admin.edit', compact( 'admin' ) );
     }
 
@@ -138,8 +143,9 @@ class UserController extends Controller {
             $user = User::find( $id );
             if ( $user ) {
                 $user->delete();
-                return redirect()->route('admin.administrator')->with('success','Admin deleted successfully');
+                return redirect()->route('admin.administrator')->with('success','Admin deleted successfully' );
             }
-        }
-
+            return redirect()->route('admin.administrator')->with('error','Sorry, that admin did not exist');
     }
+
+}
