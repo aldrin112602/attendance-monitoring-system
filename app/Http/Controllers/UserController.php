@@ -118,7 +118,7 @@ class UserController extends Controller {
             'name' => $request->input( 'name' ),
             'email' => $request->input( 'email' ),
             'password' => Hash::make( $request->input( 'password' ) ),
-            'role' => 1
+            'role' => 2
         ] );
 
         if ( $request->hasFile( 'profile' ) ) {

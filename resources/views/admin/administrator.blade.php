@@ -39,33 +39,31 @@
                         </thead>
                         <tbody>
                             @foreach ($admins as $admin)
-                                @if (Auth::user()->id != $admin->id)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->name }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->email }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                            {{ $admin->created_at }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                            {{ $admin->updated_at }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                            <i
-                                                class="fa-solid fa-circle {{ $admin->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
-                                            {{ ucwords($admin->status) }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                            <a href="{{ route('admin.admin.edit', ['id' => $admin->id]) }}"
-                                                class="text-indigo-600 hover:text-indigo-900 px-3 rounded-xl py-2 bg-indigo-200">Edit</a>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->email }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                        {{ $admin->created_at }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                        {{ $admin->updated_at }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                        <i
+                                            class="fa-solid fa-circle {{ $admin->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
+                                        {{ ucwords($admin->status) }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                        <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
+                                            class="px-3 rounded-xl py-2 {{ Auth::user()->id != $admin->id ? 'bg-indigo-200 hover:text-indigo-900 text-indigo-600' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Edit</a>
 
-                                            <a href="#"
-                                                class="text-rose-600 hover:text-rose-900 px-3 rounded-xl py-2 bg-rose-200">Delete</a>
-                                            <!-- Add edit link or button here -->
-                                        </td>
-                                    </tr>
-                                @endif
+                                        <a href="{{ Auth::user()->id != $admin->id ? route('admin.admin.edit', ['id' => $admin->id]) : '#' }}"
+                                            class="text-rose-600  px-3 rounded-xl py-2 bg-rose-200 {{ Auth::user()->id != $admin->id ? 'hover:text-rose-900' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Delete</a>
+                                        <!-- Add edit link or button here -->
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
