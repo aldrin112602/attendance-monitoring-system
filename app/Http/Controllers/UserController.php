@@ -26,7 +26,12 @@ class UserController extends Controller {
         return view( 'admin.faculty.edit', compact( 'faculty' ) );
     }
 
-    public function updateProfile( Request $request, $id ) {
+    public function editAdmin( $id ) {
+        $admin = User::where( 'id', $id )->first();
+        return view( 'admin.admin.edit', compact( 'admin' ) );
+    }
+
+    public function updateProfileFaculty( Request $request, $id ) {
         // Validate the form data
         $request->validate( [
             'name' => 'required|string|max:255',
@@ -47,8 +52,8 @@ class UserController extends Controller {
     if ($request->hasFile('profile')) {
         $profileImage = $request->file('profile');
         $profileImageName = time() . '.' . $profileImage->extension();
-        $profileImage->move(public_path('profile-images'), $profileImageName);
-        $user->profile_image = $profileImageName;
+        $profileImage->move(public_path('storage/profile-photos'), $profileImageName);
+        $user->profile_photo_path = 'profile-photos/'.$profileImageName;
     }
 
     $user->save();
@@ -56,4 +61,74 @@ class UserController extends Controller {
     return redirect()->route('admin.faculty')->with('success', 'Faculty updated successfully' );
     }
 
-}
+    public function updateProfileAdmin( Request $request, $id ) {
+        // Validate the form data
+        $request->validate( [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'newPassword' => 'nullable|min:6',
+            'profile' => 'nullable|image|mimes:jpeg, png, jpg, gif|max:2048',
+        ] );
+
+        // Update the user's profile information
+        $user = User::find( $id );
+        $user->name = $request->input( 'name' );
+        $user->email = $request->input( 'email' );
+
+        if ( $request->has( 'newPassword' ) ) {
+            $user->password = Hash::make( $request->input( 'newPassword' ) );
+        }
+
+        if ( $request->hasFile( 'profile' ) ) {
+            $profileImage = $request->file( 'profile' );
+            $profileImageName = time() . '.' . $profileImage->extension();
+            $profileImage->move( public_path( 'storage/profile-photos' ), $profileImageName );
+            $user->profile_photo_path = 'profile-photos/'.$profileImageName;
+        }
+
+        $user->save();
+
+        return redirect()->route( 'admin.administrator' )->with( 'success', 'Admin updated successfully' );
+    }
+
+
+
+    
+
+    public function addAdmin() {
+        return view( 'admin.admin.create' );
+    }
+
+    public function addAdminPost( Request $request ) {
+        // Validate the form data
+        $request->validate( [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ] );
+
+        // Create a new user and insert data into the database
+        User::create( [
+            'name' => $request->input( 'name' ),
+            'email' => $request->input( 'email' ),
+            'password' => Hash::make( $request->input( 'password' ) ),
+            'role' => 1
+        ] );
+
+        if ( $request->hasFile( 'profile' ) ) {
+            $profileImage = $request->file( 'profile' );
+            $profileImageName = time() . '.' . $profileImage->extension();
+            $profileImage->move( public_path( 'storage/profile-photos' ), $profileImageName );
+            $profile_photo_path = 'profile-photos/'.$profileImageName;
+
+            // Update the user's profile_image field with the filename
+        User::where('email', $request->input('email'))
+            ->update(['profile_photo_path' => $profile_photo_path]);
+    }
+
+    return redirect()->route('admin.administrator')->with('success', 'Admin added successfully' );
+
+        }
+
+    }

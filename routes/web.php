@@ -36,10 +36,20 @@ Route::middleware([
         })->name('admin.dashboard');
 
 
-        Route::post('/update-profile/{id}', [UserController::class, 'updateProfile'])->name('update.profile');
+        Route::post('/update-profile-faculty/{id}', [UserController::class, 'updateProfileFaculty'])->name('update.profile.faculty');
+
+        Route::post('/update-profile-admin/{id}', [UserController::class, 'updateProfileAdmin'])->name('update.profile.admin');
         
         Route::get('/admin/faculty', [UserController::class, 'getFaculty'])->name('admin.faculty');
         Route::get('/admin/faculty/edit/{id}', [UserController::class, 'editFaculty'])->name('admin.faculty.edit');
+
+        Route::get('/admin/admin/edit/{id}', [UserController::class, 'editAdmin'])->name('admin.admin.edit');
+
+
+        Route::get('/admin/admin/create', [UserController::class, 'addAdmin'])->name('admin.admin.create');
+
+        Route::post('/admin/admin/create', [UserController::class, 'addAdminPost'])->name('admin.admin.create.post');
+
         Route::get('/admin/administrator', [UserController::class, 'index'])->name('admin.administrator');
 
         Route::get('/admin/message', function () {

@@ -22,7 +22,7 @@
                             {{ __('Faculty') }}
                         </x-nav-link>
 
-                        <x-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator')">
+                        <x-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator') || request()->routeIs('admin.admin.create')">
                             {{ __('Administrator') }}
                         </x-nav-link>
 

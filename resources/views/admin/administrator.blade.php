@@ -3,8 +3,9 @@
         <h2
             class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center justify-between">
             {{ __('Administrator') }}
-            <button class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Admin</button>
+            <a href="{{ route('admin.admin.create') }}"
+                class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
+                    class="fa fa-plus" aria-hidden="true"></i> Admin</a>
         </h2>
     </x-slot>
 
@@ -38,26 +39,33 @@
                         </thead>
                         <tbody>
                             @foreach ($admins as $admin)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->name }}</td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->email }}</td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->created_at }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->updated_at }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                        <i class="fa-solid fa-circle {{ $admin->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
-                                        {{ ucwords($admin->status) }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                        <a href="#"
-                                            class="text-indigo-600 hover:text-indigo-900 px-3 rounded-xl py-2 bg-indigo-200">Edit</a>
-                                        
-                                        <a href="#"
-                                            class="text-rose-600 hover:text-rose-900 px-3 rounded-xl py-2 bg-rose-200">Delete</a>
-                                        <!-- Add edit link or button here -->
-                                    </td>
-                                </tr>
+                                @if (Auth::user()->id != $admin->id)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->name }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->email }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                            {{ $admin->created_at }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                            {{ $admin->updated_at }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                            <i
+                                                class="fa-solid fa-circle {{ $admin->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
+                                            {{ ucwords($admin->status) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                            <a href="{{ route('admin.admin.edit', ['id' => $admin->id]) }}"
+                                                class="text-indigo-600 hover:text-indigo-900 px-3 rounded-xl py-2 bg-indigo-200">Edit</a>
+
+                                            <a href="#"
+                                                class="text-rose-600 hover:text-rose-900 px-3 rounded-xl py-2 bg-rose-200">Delete</a>
+                                            <!-- Add edit link or button here -->
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
