@@ -35,9 +35,11 @@ Route::middleware([
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
+
+        Route::post('/update-profile/{id}', [UserController::class, 'updateProfile'])->name('update.profile');
         
         Route::get('/admin/faculty', [UserController::class, 'getFaculty'])->name('admin.faculty');
-
+        Route::get('/admin/faculty/edit/{id}', [UserController::class, 'editFaculty'])->name('admin.faculty.edit');
         Route::get('/admin/administrator', [UserController::class, 'index'])->name('admin.administrator');
 
         Route::get('/admin/message', function () {

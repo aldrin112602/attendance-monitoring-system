@@ -45,7 +45,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->updated_at }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $admin->status }}</td>
+                                    <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
+                                        <i class="fa-solid fa-circle {{ $admin->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
+                                        {{ ucwords($admin->status) }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
                                         <a href="#"
                                             class="text-indigo-600 hover:text-indigo-900 px-3 rounded-xl py-2 bg-indigo-200">Edit</a>
