@@ -17,14 +17,14 @@ class UserController extends Controller {
     }
 
     public function getFaculty() {
-        $faculty = User::where( 'role', 2 )->orderBy( 'id', 'desc' )->paginate( 10 );
+        $faculty = User::where( 'role', 0 )->orderBy( 'id', 'desc' )->paginate( 10 );
         return view( 'admin.faculty', compact( 'faculty' ) );
     }
 
     public function editFaculty( $id ) {
         $faculty = User::find( $id );
-        if ( !$faculty || $faculty->role != 2 ) {
-            return redirect()->route( 'admin.faculty' )->with( 'error', 'Sorry, that faculty did not exist' );
+        if ( !$faculty || $faculty->role != 0 ) {
+            return redirect()->route( 'admin.faculty' )->with( 'error', 'Record not found for editing' );
         }
         return view( 'admin.faculty.edit', compact( 'faculty' ) );
     }
@@ -32,7 +32,7 @@ class UserController extends Controller {
     public function editAdmin( $id ) {
         $admin = User::find( $id );
         if ( !$admin || $admin->role != 1 ) {
-            return redirect()->route( 'admin.administrator' )->with( 'error', 'Sorry, that admin did not exist' );
+            return redirect()->route( 'admin.administrator' )->with( 'error', 'Record not found for editing' );
             ;
         }
         return view( 'admin.admin.edit', compact( 'admin' ) );
@@ -65,7 +65,7 @@ class UserController extends Controller {
 
     $user->save();
 
-    return redirect()->route('admin.faculty')->with('success', 'Faculty updated successfully' );
+    return redirect()->route('admin.faculty')->with('success', 'Record updated successfully' );
     }
 
     public function updateProfileAdmin( Request $request, $id ) {
@@ -95,7 +95,7 @@ class UserController extends Controller {
 
         $user->save();
 
-        return redirect()->route( 'admin.administrator' )->with( 'success', 'Admin updated successfully' );
+        return redirect()->route( 'admin.administrator' )->with( 'success', 'Record updated successfully' );
     }
 
     public function addAdmin() {
@@ -120,7 +120,7 @@ class UserController extends Controller {
             'name' => $request->input( 'name' ),
             'email' => $request->input( 'email' ),
             'password' => Hash::make( $request->input( 'password' ) ),
-            'role' => 2
+            'role' => 0
         ] );
 
         if ( $request->hasFile( 'profile' ) ) {
@@ -134,7 +134,7 @@ class UserController extends Controller {
             ->update(['profile_photo_path' => $profile_photo_path]);
     }
 
-    return redirect()->route('admin.faculty')->with('success', 'Faculty added successfully' );
+    return redirect()->route('admin.faculty')->with('success', 'Record added successfully' );
 
         }
 
@@ -143,9 +143,19 @@ class UserController extends Controller {
             $user = User::find( $id );
             if ( $user ) {
                 $user->delete();
-                return redirect()->route('admin.administrator')->with('success','Admin deleted successfully' );
+                return redirect()->route('admin.administrator')->with('success','Record deleted successfully' );
             }
-            return redirect()->route('admin.administrator')->with('error','Sorry, that admin did not exist');
-    }
+            return redirect()->route('admin.administrator')->with('error','Record not found for deletion');
+        }
+
+        public function deleteFaculty($id) {
+            $id = intval( $id );
+            $user = User::find( $id );
+            if ( $user ) {
+                $user->delete();
+                return redirect()->route('admin.faculty')->with('success','Record deleted successfully' );
+            }
+            return redirect()->route('admin.faculty')->with('error','Record not found for deletion');
+        }
 
 }

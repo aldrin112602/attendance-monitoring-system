@@ -52,9 +52,12 @@ Route::middleware([
 
 
 
-        Route::get('/admin/faculty/create', [UserController::class, 'addFaculty'])->name('admin.faculty.create');
 
+
+        Route::get('/admin/faculty/create', [UserController::class, 'addFaculty'])->name('admin.faculty.create');
         Route::post('/admin/faculty/create', [UserController::class, 'addFacultyPost'])->name('admin.faculty.create.post');
+        Route::post('/admin/delete/faculty/{id}', [UserController::class, 'deleteFaculty'])->name('admin.delete.faculty');
+
 
 
 

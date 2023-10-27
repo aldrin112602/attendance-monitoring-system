@@ -50,12 +50,22 @@
                                         {{ ucwords($faculty->status) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                        <a href="{{ route('admin.faculty.edit', ['id' => $faculty->id]) }}"
-                                            class="text-indigo-600 hover:text-indigo-900 px-3 rounded-xl py-2 bg-indigo-200">Edit</a>
+                                        <form class="flex items-center justify-center gap-3"
+                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}" method="POST">
+                                            @csrf
 
-                                        <a href="#"
-                                            class="text-rose-600 hover:text-rose-900 px-3 rounded-xl py-2 bg-rose-200">Delete</a>
-                                        <!-- Add edit link or button here -->
+                                            <a href="{{ Auth::user()->id != $faculty->id ? route('admin.faculty.edit', ['id' => $faculty->id]) : '#' }}"
+                                                class="px-3 rounded-xl py-2 {{ Auth::user()->id != $faculty->id ? 'bg-indigo-200 hover:text-indigo-900 text-indigo-600' : 'bg-slate-700 cursor-not-allowed text-slate-400' }}">Edit</a>
+
+                                            <button {{ Auth::user()->id == $faculty->id ? 'disabled' : '' }}
+                                                type="button"
+                                                class="px-3 rounded-xl py-2 {{ Auth::user()->id == $faculty->id ? 'cursor-not-allowed bg-slate-700 text-slate-400' : 'bg-rose-200 hover:text-rose-900 text-rose-600' }}"
+                                                onclick="deleteFaculty({{ $faculty->id }})">Delete</button>
+                                        </form>
+                                        <form id="delete-form" style="display: none;"
+                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}" method="POST">
+                                            @csrf
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -66,4 +76,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deleteFaculty(facultyId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form').submit();
+                }
+            });
+        }
+    </script>
 </x-app-layout>
