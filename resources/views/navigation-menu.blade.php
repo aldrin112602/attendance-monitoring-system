@@ -18,11 +18,14 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty') || request()->routeIs('admin.faculty.edit') || request()->routeIs('admin.faculty.create')">
+                        <x-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty') ||
+                            request()->routeIs('admin.faculty.edit') ||
+                            request()->routeIs('admin.faculty.create')">
                             {{ __('Faculty') }}
                         </x-nav-link>
 
-                        <x-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator') || request()->routeIs('admin.admin.create')">
+                        <x-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator') ||
+                            request()->routeIs('admin.admin.create')">
                             {{ __('Administrator') }}
                         </x-nav-link>
 
@@ -181,11 +184,13 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty')">
+                <x-responsive-nav-link href="{{ route('admin.faculty') }}" :active="request()->routeIs('admin.faculty') ||
+                    request()->routeIs('admin.faculty.edit') ||
+                    request()->routeIs('admin.faculty.create')">
                     {{ __('Faculty') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator')">
+                <x-responsive-nav-link href="{{ route('admin.administrator') }}" :active="request()->routeIs('admin.administrator') || request()->routeIs('admin.admin.create')">
                     {{ __('Administrator') }}
                 </x-responsive-nav-link>
 
