@@ -170,4 +170,20 @@ class UserController extends Controller {
             return view('dashboard' );
         }
 
+
+        public function deactivateUser(Request $request) {
+            $user = Auth::user();
+            if ($user->status === 'active') {
+                $user->status = 'inactive';
+                $user->save();
+
+                $user->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect()->route('login')->with('success', 'Logout successfully');
+            }
+
+        }
+
     }

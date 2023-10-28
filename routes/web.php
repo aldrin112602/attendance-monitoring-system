@@ -26,6 +26,7 @@ Route::middleware([
     // User role == 0
     Route::middleware(['role:0'])->group(function () {
         Route::get('/dashboard', [UserController::class, 'userFaculty'])->name('dashboard');
+        Route::post('/dashboard/deactivate', [UserController::class, 'deactivateUser'])->name('users.deactivate');
     });
 
     // User role == 1
@@ -43,7 +44,7 @@ Route::middleware([
         Route::get('/admin/faculty/edit/{id}', [UserController::class, 'editFaculty'])->name('admin.faculty.edit');
 
         Route::get('/admin/admin/edit/{id}', [UserController::class, 'editAdmin'])->name('admin.admin.edit');
-
+        
 
         Route::get('/admin/admin/create', [UserController::class, 'addAdmin'])->name('admin.admin.create');
         Route::post('/admin/admin/create', [UserController::class, 'addAdminPost'])->name('admin.admin.create.post');
