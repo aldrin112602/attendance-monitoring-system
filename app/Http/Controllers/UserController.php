@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -158,4 +159,15 @@ class UserController extends Controller {
             return redirect()->route('admin.faculty')->with('error','Record not found for deletion');
         }
 
-}
+
+        public function userFaculty() {
+            $user = Auth::user();
+            if ($user->status === 'inactive') {
+                $user->status = 'active';
+                $user->save();
+            }
+
+            return view('dashboard' );
+        }
+
+    }

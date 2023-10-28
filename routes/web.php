@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 /*
@@ -24,9 +25,7 @@ Route::middleware([
 ])->group(function () {
     // User role == 0
     Route::middleware(['role:0'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [UserController::class, 'userFaculty'])->name('dashboard');
     });
 
     // User role == 1
