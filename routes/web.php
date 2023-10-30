@@ -23,19 +23,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+
+    Route::post('/dashboard/deactivate', [UserController::class, 'deactivateUser'])->name('users.deactivate');
+
     // User role == 0
     Route::middleware(['role:0'])->group(function () {
         Route::get('/dashboard', [UserController::class, 'userFaculty'])->name('dashboard');
-        Route::post('/dashboard/deactivate', [UserController::class, 'deactivateUser'])->name('users.deactivate');
     });
 
     // User role == 1
     Route::middleware(['role:1'])->group(function () {
-        Route::get('/admin', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
-
-
+        Route::get('/admin', [UserController::class, 'admin'])->name('admin.dashboard');
         Route::post('/update-profile-faculty/{id}', [UserController::class, 'updateProfileFaculty'])->name('update.profile.faculty');
 
         Route::post('/update-profile-admin/{id}', [UserController::class, 'updateProfileAdmin'])->name('update.profile.admin');

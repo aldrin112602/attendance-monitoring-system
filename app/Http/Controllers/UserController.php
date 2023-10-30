@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller {
     //
@@ -15,6 +16,16 @@ class UserController extends Controller {
     public function index() {
         $admins = User::where( 'role', 1 )->orderBy( 'id', 'desc' )->paginate( 10 );
         return view( 'admin.administrator', compact( 'admins' ) );
+    }
+
+    public function admin() {
+        $user = Auth::user();
+        if ( $user->status === 'inactive' ) {
+            $user->status = 'active';
+            $user->save();
+        }
+        return view( 'admin.dashboard' );
+
     }
 
     public function getFaculty() {
@@ -171,18 +182,21 @@ class UserController extends Controller {
         }
 
 
-        public function deactivateUser(Request $request) {
+        public function deactivateUser(Request $request): RedirectResponse {
             $user = Auth::user();
             if ($user->status === 'active') {
                 $user->status = 'inactive';
                 $user->save();
 
-                $user->logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
+                if (Auth::check()) {
+                    Auth::guard('web')->logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+                }
 
-                return redirect()->route('login')->with('success', 'Logout successfully');
             }
+
+            return redirect()->route('login')->with('success', 'Logout successfully' );
 
         }
 

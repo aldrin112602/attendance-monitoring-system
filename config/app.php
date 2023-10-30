@@ -187,4 +187,11 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+    ],
+
 ];
