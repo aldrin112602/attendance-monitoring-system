@@ -29,8 +29,8 @@ class UserController extends Controller {
     }
 
     public function getFaculty() {
-        $faculty = User::where( 'role', 0 )->orderBy( 'id', 'desc' )->simplePaginate( 10 );
-        return view( 'admin.faculty', ['faculty' => $faculty]);
+        $faculties = User::where( 'role', 0 )->orderBy( 'id', 'desc' )->paginate( 1 );
+        return view( 'admin.faculty', ['faculties' => $faculties]);
     }
 
     public function editFaculty( $id ) {

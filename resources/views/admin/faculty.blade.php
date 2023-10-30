@@ -38,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($faculty as $faculty)
+                            @foreach ($faculties as $faculty)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $faculty->name }}</td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $faculty->email }}</td>
@@ -77,15 +77,15 @@
                     </table>
                 </div>
 
-                {{-- @if ($faculty->links()->paginator->hasPages())
-                    <div class="mt-4 p-4 box has-text-centered">
-                        {{ $faculty->links() }}
-                    </div>
-                @endif --}}
 
 
                 {{-- end table --}}
             </div>
+            @if ($faculties->links()->paginator->hasPages())
+                <div class="mt-4 p-4 box has-text-centered px-0">
+                    {{ $faculties->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

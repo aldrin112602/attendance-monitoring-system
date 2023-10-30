@@ -81,6 +81,11 @@
                 {{-- end table --}}
 
             </div>
+            @if ($admins->links()->paginator->hasPages())
+                <div class="mt-4 p-4 box has-text-centered px-0">
+                    {{ $admins->links() }}
+                </div>
+            @endif
         </div>
     </div>
     <script>
