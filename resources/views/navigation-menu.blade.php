@@ -34,11 +34,28 @@
                         </x-nav-link>
 
                         {{-- End Admin navigation link --}}
+
+                        
                     @else
-                        {{-- User navigation link --}}
+                        {{-- Faculty navigation link --}}
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
+
+                        <x-nav-link href="{{ route('faculty.student') }}" :active="request()->routeIs('faculty.student')">
+                            {{ __('Student') }}
+                        </x-nav-link>
+                        <x-nav-link href="#">
+                            {{ __('Subject') }}
+                        </x-nav-link>
+                        <x-nav-link href="#">
+                            {{ __('Message') }}
+                        </x-nav-link>
+                        <x-nav-link href="#">
+                            {{ __('Notification') }}
+                        </x-nav-link>
+
+
                         {{-- End User navigation link --}}
                     @endif
 

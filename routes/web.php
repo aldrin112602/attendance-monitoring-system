@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FacultyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,7 @@ Route::middleware([
     // User role == 0
     Route::middleware(['role:0'])->group(function () {
         Route::get('/dashboard', [UserController::class, 'userFaculty'])->name('dashboard');
+        Route::get('/faculty/student', [FacultyController::class, 'studentView'])->name('faculty.student');
     });
 
     // User role == 1

@@ -2,10 +2,9 @@
     <x-slot name="header">
         <h2
             class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center justify-between">
-            {{ __('Faculty') }}
-            <a href="{{ route('admin.faculty.create') }}"
-                class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Faculty</a>
+            {{ __('Student') }}
+            <a href="{{ route('admin.faculty.create') }}" class="bg-green-800 px-3 py-1 rounded-md text-sm flex items-center justify-center gap-1"><i
+                    class="fa fa-plus" aria-hidden="true"></i> Student</a>
         </h2>
     </x-slot>
 
@@ -38,7 +37,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($faculty as $faculty)
+                            {{-- @foreach ($faculty as $faculty)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $faculty->name }}</td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $faculty->email }}</td>
@@ -47,14 +46,12 @@
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">{{ $faculty->updated_at }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
-                                        <i
-                                            class="fa-solid fa-circle {{ $faculty->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
+                                        <i class="fa-solid fa-circle {{ $faculty->status == 'inactive' ? 'text-gray-400' : 'text-green-500' }}"></i>
                                         {{ ucwords($faculty->status) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap dark:text-white">
                                         <form class="flex items-center justify-center gap-3"
-                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}"
-                                            method="POST">
+                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}" method="POST">
                                             @csrf
 
                                             <a href="{{ Auth::user()->id != $faculty->id ? route('admin.faculty.edit', ['id' => $faculty->id]) : '#' }}"
@@ -66,31 +63,22 @@
                                                 onclick="deleteFaculty({{ $faculty->id }})">Delete</button>
                                         </form>
                                         <form id="delete-form" style="display: none;"
-                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}"
-                                            method="POST">
+                                            action="{{ route('admin.delete.faculty', ['id' => $faculty->id]) }}" method="POST">
                                             @csrf
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
-
-                {{-- @if ($faculty->links()->paginator->hasPages())
-                    <div class="mt-4 p-4 box has-text-centered">
-                        {{ $faculty->links() }}
-                    </div>
-                @endif --}}
-
-
                 {{-- end table --}}
             </div>
         </div>
     </div>
 
     <script>
-        function deleteFaculty(facultyId) {
+        function deleteFaculty(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'This action cannot be undone',
@@ -107,3 +95,4 @@
         }
     </script>
 </x-app-layout>
+
